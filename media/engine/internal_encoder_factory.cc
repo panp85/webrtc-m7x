@@ -44,6 +44,8 @@ VideoEncoderFactory::CodecInfo InternalEncoderFactory::QueryVideoEncoder(
 
 std::unique_ptr<VideoEncoder> InternalEncoderFactory::CreateVideoEncoder(
     const SdpVideoFormat& format) {
+  RTC_LOG(LS_ERROR) << "InternalEncoderFactory::CreateVideoEncoder, format: "
+                    << format.name;
   if (absl::EqualsIgnoreCase(format.name, cricket::kVp8CodecName))
     return VP8Encoder::Create();
   if (absl::EqualsIgnoreCase(format.name, cricket::kVp9CodecName))
