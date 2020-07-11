@@ -334,6 +334,7 @@ int32_t H264EncoderImpl::RegisterEncodeCompleteCallback(
 int32_t H264EncoderImpl::SetRateAllocation(
     const VideoBitrateAllocation& bitrate,
     uint32_t new_framerate) {
+   RTC_LOG(LS_INFO) << "H264EncoderImpl::SetRateAllocation";
   if (encoders_.empty())
     return WEBRTC_VIDEO_CODEC_UNINITIALIZED;
 
@@ -357,6 +358,7 @@ int32_t H264EncoderImpl::SetRateAllocation(
   codec_.maxFramerate = new_framerate;
 
   size_t stream_idx = encoders_.size() - 1;
+  RTC_LOG(LS_INFO) << "H264EncoderImpl::SetRateAllocation, stream_idx: " << stream_idx;
   for (size_t i = 0; i < encoders_.size(); ++i, --stream_idx) {
     // Update layer config.
     configurations_[i].target_bps = bitrate.GetSpatialLayerSum(stream_idx);
