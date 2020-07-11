@@ -1436,7 +1436,7 @@ void VideoStreamEncoder::OnBitrateUpdated(uint32_t bitrate_bps,
   RTC_DCHECK_RUN_ON(&encoder_queue_);
   RTC_DCHECK(sink_) << "sink_ must be set before the encoder is active.";
 
-  RTC_LOG(LS_VERBOSE) << "OnBitrateUpdated, bitrate " << bitrate_bps
+  RTC_LOG(LS_INFO) << "OnBitrateUpdated, bitrate " << bitrate_bps
                       << " packet loss " << static_cast<int>(fraction_lost)
                       << " rtt " << round_trip_time_ms;
   // On significant changes to BWE at the start of the call,
