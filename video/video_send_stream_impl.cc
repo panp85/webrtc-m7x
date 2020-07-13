@@ -81,6 +81,8 @@ absl::optional<int> GetFallbackMinBpsFromFieldTrial() {
 }
 
 int GetEncoderMinBitrateBps() {
+  RTC_LOG(LS_INFO) << "GetEncoderMinBitrateBps";
+
   const int kDefaultEncoderMinBitrateBps = 30000;
   return GetFallbackMinBpsFromFieldTrial().value_or(
       kDefaultEncoderMinBitrateBps);
