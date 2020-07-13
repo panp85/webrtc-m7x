@@ -1752,6 +1752,10 @@ WebRtcVideoChannel::WebRtcVideoSendStream::GetDegradationPreference() const {
     // the behavior for any project expecting MAINTAIN_FRAMERATE by default.
     degradation_preference = webrtc::DegradationPreference::MAINTAIN_FRAMERATE;
   }
+  RTC_LOG(LS_INFO)
+          << "WebRtcVideoChannel::WebRtcVideoSendStream::GetDegradationPreference:" 
+          << static_cast<std::underlying_type<webrtc::DegradationPreference>::type>(degradation_preference);
+  
   return degradation_preference;
 }
 
