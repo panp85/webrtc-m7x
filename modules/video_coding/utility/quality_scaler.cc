@@ -99,6 +99,7 @@ QualityScaler::QualityScaler(AdaptationObserverInterface* observer,
         CheckQp();
         return TimeDelta::ms(GetSamplingPeriodMs());
       });
+	  
   RTC_LOG(LS_INFO) << "QP thresholds: low: " << thresholds_.low
                    << ", high: " << thresholds_.high;
 }
