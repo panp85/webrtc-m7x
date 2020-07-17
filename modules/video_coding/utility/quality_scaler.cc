@@ -153,6 +153,7 @@ void QualityScaler::CheckQp() {
   const size_t frames = config_.use_all_drop_reasons
                             ? framedrop_percent_all_.Size()
                             : framedrop_percent_media_opt_.Size();
+  RTC_LOG(LS_INFO) << "CheckQp, frames, kMinFramesNeededToScale:  " << frames << ", " << kMinFramesNeededToScale;
   if (frames < kMinFramesNeededToScale) {
     observed_enough_frames_ = false;
     return;
@@ -164,6 +165,9 @@ void QualityScaler::CheckQp() {
       config_.use_all_drop_reasons
           ? framedrop_percent_all_.GetAverageRoundedDown()
           : framedrop_percent_media_opt_.GetAverageRoundedDown();
+  RTC_LOG(LS_INFO) << "CheckQp, frames, kMinFramesNeededToScale:  " 
+  					<< (drop_rate?(*drop_rate):-1) << ", " 
+  					<< kMinFramesNeededToScale;
   if (drop_rate && *drop_rate >= kFramedropPercentThreshold) {
     RTC_LOG(LS_INFO) << "Reporting high QP, framedrop percent " << *drop_rate;
     ReportQpHigh();
