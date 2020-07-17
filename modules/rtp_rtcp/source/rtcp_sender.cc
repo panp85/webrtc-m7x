@@ -777,6 +777,10 @@ void RTCPSender::PrepareReport(const FeedbackState& feedback_state) {
     generate_report = true;
     RTC_DCHECK(ConsumeFlag(kRtcpReport) == false);
   } else {
+  	if(ConsumeFlag(kRtcpReport)){
+//  		RTC_LOG(LS_WARNING) << "PrepareReport, method_: " 
+//			<< static_cast<std::underlying_type<RtcpMode>::type>(method_);
+  	}
     generate_report =
         (ConsumeFlag(kRtcpReport) && method_ == RtcpMode::kReducedSize) ||
         method_ == RtcpMode::kCompound;
