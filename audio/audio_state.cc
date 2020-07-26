@@ -100,6 +100,7 @@ void AudioState::AddSendingStream(webrtc::AudioSendStream* stream,
   if (!adm->Recording()) {
     if (adm->InitRecording() == 0) {
       if (recording_enabled_) {
+	  	RTC_LOG(INFO) << "AudioState::AddSendingStream, go to adm->StartRecording.";
         adm->StartRecording();
       }
     } else {
