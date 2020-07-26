@@ -237,7 +237,7 @@ void WebRtcVoiceEngine::Init() {
   // No ADM supplied? Create a default one.
   if (!adm_) {
     adm_ = webrtc::AudioDeviceModule::Create(
-        webrtc::AudioDeviceModule::kPlatformDefaultAudio);
+        webrtc::AudioDeviceModule::kLinuxAlsaAudio);
   }
 #endif  // WEBRTC_INCLUDE_INTERNAL_AUDIO_DEVICE
   RTC_CHECK(adm());
@@ -968,6 +968,7 @@ class WebRtcVoiceMediaChannel::WebRtcAudioSendStream
     RTC_DCHECK(stream_);
     RTC_DCHECK_EQ(1UL, rtp_parameters_.encodings.size());
     if (send_ && source_ != nullptr && rtp_parameters_.encodings[0].active) {
+	  RTC_LOG(LS_INFO) << "WebRtcAudioSendStream UpdateSendState, stream_->Start";
       stream_->Start();
     } else {  // !send || source_ = nullptr
       stream_->Stop();
