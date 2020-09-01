@@ -1215,6 +1215,7 @@ int AudioProcessingImpl::ProcessCaptureStreamLocked() {
   AudioBuffer* capture_buffer = capture_.capture_audio.get();  // For brevity.
 
   if (private_submodules_->pre_amplifier) {
+  	//RTC_LOG(LS_INFO) << "ppt, in AudioProcessingImpl::ProcessCaptureStreamLocked, go to private_submodules_->pre_amplifier->ApplyGain";
     private_submodules_->pre_amplifier->ApplyGain(AudioFrameView<float>(
         capture_buffer->channels_f(), capture_buffer->num_channels(),
         capture_buffer->num_frames()));
@@ -1255,6 +1256,7 @@ int AudioProcessingImpl::ProcessCaptureStreamLocked() {
 
   if (constants_.use_experimental_agc &&
       public_submodules_->gain_control->is_enabled()) {
+    //RTC_LOG(LS_INFO) << "ppt, in AudioProcessingImpl::ProcessCaptureStreamLocked, constants_.use_experimental_agc: yes, public_submodules_->gain_control->is_enabled: yes";
     private_submodules_->agc_manager->AnalyzePreProcess(
         capture_buffer->channels()[0], capture_buffer->num_channels(),
         capture_nonlocked_.capture_processing_format.num_frames());
@@ -1284,6 +1286,7 @@ int AudioProcessingImpl::ProcessCaptureStreamLocked() {
   // TODO(peah): Move the AEC3 low-cut filter to this place.
   if (private_submodules_->low_cut_filter &&
       !private_submodules_->echo_controller) {
+    //RTC_LOG(LS_INFO) << "ppt, in AudioProcessingImpl::ProcessCaptureStreamLocked, go to private_submodules_->low_cut_filter->Process";
     private_submodules_->low_cut_filter->Process(capture_buffer);
   }
   RETURN_ON_ERR(
@@ -1299,6 +1302,7 @@ int AudioProcessingImpl::ProcessCaptureStreamLocked() {
 
   if (private_submodules_->echo_controller) {
     data_dumper_->DumpRaw("stream_delay", stream_delay_ms());
+	//RTC_LOG(LS_INFO) << "ppt, in AudioProcessingImpl::ProcessCaptureStreamLocked, echo_controller yes";
 
     if (was_stream_delay_set()) {
       private_submodules_->echo_controller->SetAudioBufferDelay(
@@ -1308,6 +1312,7 @@ int AudioProcessingImpl::ProcessCaptureStreamLocked() {
     private_submodules_->echo_controller->ProcessCapture(
         capture_buffer, capture_.echo_path_gain_change);
   } else {
+  	//RTC_LOG(LS_INFO) << "ppt, in AudioProcessingImpl::ProcessCaptureStreamLocked, echo_controller no";
     RETURN_ON_ERR(private_submodules_->echo_cancellation->ProcessCaptureAudio(
         capture_buffer, stream_delay_ms()));
   }

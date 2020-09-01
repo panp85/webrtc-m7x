@@ -297,6 +297,7 @@ int32_t AudioDeviceBuffer::RequestPlayoutData(size_t samples_per_channel) {
   int64_t elapsed_time_ms = -1;
   int64_t ntp_time_ms = -1;
   const size_t bytes_per_frame = play_channels_ * sizeof(int16_t);
+  RTC_LOG(LS_ERROR) << "AudioDeviceBuffer::RequestPlayoutData, go to audio_transport_cb_->NeedMorePlayData.";
   uint32_t res = audio_transport_cb_->NeedMorePlayData(
       samples_per_channel, bytes_per_frame, play_channels_, play_sample_rate_,
       play_buffer_.data(), num_samples_out, &elapsed_time_ms, &ntp_time_ms);

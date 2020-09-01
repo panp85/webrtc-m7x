@@ -19,6 +19,7 @@
 #include "modules/audio_processing/logging/apm_data_dumper.h"
 #include "rtc_base/checks.h"
 #include "rtc_base/constructor_magic.h"
+#include "rtc_base/logging.h"
 
 namespace webrtc {
 
@@ -141,7 +142,7 @@ int GainControlImpl::AnalyzeCaptureAudio(AudioBuffer* audio) {
   RTC_DCHECK_GE(160, audio->num_frames_per_band());
   RTC_DCHECK_EQ(audio->num_channels(), *num_proc_channels_);
   RTC_DCHECK_LE(*num_proc_channels_, gain_controllers_.size());
-
+  //RTC_LOG(LS_INFO) << "ppt, in AudioProcessingImpl::ProcessCaptureStreamLocked, mode_: "<<mode_;
   if (mode_ == kAdaptiveAnalog) {
     int capture_channel = 0;
     for (auto& gain_controller : gain_controllers_) {
