@@ -287,13 +287,15 @@ void ConvertEncodedInfoToFragmentationHeader(
     RTPFragmentationHeader* frag) {
   if (info.redundant.empty()) {
     frag->fragmentationVectorSize = 0;
+	//RTC_LOG(LS_ERROR) << "ppt, in ConvertEncodedInfoToFragmentationHeader, info.redundant.empty() yes.";
     return;
   }
-
+  RTC_LOG(LS_ERROR) << "ppt, in ConvertEncodedInfoToFragmentationHeader, info.redundant.size: " << info.redundant.size();
   frag->VerifyAndAllocateFragmentationHeader(
       static_cast<uint16_t>(info.redundant.size()));
   frag->fragmentationVectorSize = static_cast<uint16_t>(info.redundant.size());
   size_t offset = 0;
+  
   for (size_t i = 0; i < info.redundant.size(); ++i) {
     frag->fragmentationOffset[i] = offset;
     offset += info.redundant[i].encoded_bytes;
