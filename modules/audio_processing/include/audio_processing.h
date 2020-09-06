@@ -258,7 +258,7 @@ class AudioProcessing : public rtc::RefCountInterface {
       // APM components are not fine-tuned for legacy suppression levels.
       bool legacy_moderate_suppression_level = false;
       // Recommended not to use. Will be removed in the future.
-      bool use_legacy_aec = false;
+      bool use_legacy_aec = true;
     } echo_canceller;
 
     // Enables background noise suppression.
