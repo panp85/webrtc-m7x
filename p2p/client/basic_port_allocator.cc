@@ -1331,7 +1331,7 @@ void AllocationSequence::OnMessage(rtc::Message* msg) {
       break;
 
     case PHASE_TCP:
-      CreateTCPPorts();
+      //CreateTCPPorts();
       state_ = kCompleted;
       break;
 
