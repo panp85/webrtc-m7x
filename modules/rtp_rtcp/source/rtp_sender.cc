@@ -667,6 +667,7 @@ bool RTPSender::SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
 
   uint32_t ssrc = packet->Ssrc();
   if (paced_sender_) {
+  	//RTC_LOG(LS_WARNING) << "ppt, in RTPSender::SendToNetwork, paced_sender_ yes";
     uint16_t seq_no = packet->SequenceNumber();
     // Correct offset between implementations of millisecond time stamps in
     // TickTime and Clock.
@@ -686,6 +687,7 @@ bool RTPSender::SendToNetwork(std::unique_ptr<RtpPacketToSend> packet,
                                 packet_size, false);
     return true;
   }
+  RTC_LOG(LS_WARNING) << "ppt, in RTPSender::SendToNetwork, paced_sender_ no";
 
   PacketOptions options;
   options.is_retransmit = false;
