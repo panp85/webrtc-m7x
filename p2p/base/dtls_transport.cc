@@ -390,6 +390,7 @@ int DtlsTransport::SendPacket(const char* data,
                               int flags) {
   if (!dtls_active_) {
     // Not doing DTLS.
+    RTC_LOG(LS_INFO) << "ppt, in DtlsTransport::SendPacket, go to ice_transport_->SendPacket";
     return ice_transport_->SendPacket(data, size, options);
   }
 
@@ -407,9 +408,10 @@ int DtlsTransport::SendPacket(const char* data,
         if (!IsRtpPacket(data, size)) {
           return -1;
         }
-
+		//RTC_LOG(LS_INFO) << "ppt, in DtlsTransport::SendPacket, PF_SRTP_BYPASS yes, go to ice_transport_->SendPacket";
         return ice_transport_->SendPacket(data, size, options);
       } else {
+	  	RTC_LOG(LS_INFO) << "ppt, in DtlsTransport::SendPacket, PF_SRTP_BYPASS no, go to dtls_->WriteAll";
         return (dtls_->WriteAll(data, size, NULL, NULL) == rtc::SR_SUCCESS)
                    ? static_cast<int>(size)
                    : -1;
