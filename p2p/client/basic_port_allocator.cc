@@ -767,6 +767,7 @@ void BasicPortAllocatorSession::DoAllocate(bool disable_equivalent) {
     PortConfiguration* config = configs_.empty() ? nullptr : configs_.back();
     for (uint32_t i = 0; i < networks.size(); ++i) {
       uint32_t sequence_flags = flags();
+	  RTC_LOG(LS_INFO) << "BasicPortAllocatorSession::DoAllocate, sequence_flags: " << sequence_flags;
       if ((sequence_flags & DISABLE_ALL_PHASES) == DISABLE_ALL_PHASES) {
         // If all the ports are disabled we should just fire the allocation
         // done event and return.
@@ -775,6 +776,7 @@ void BasicPortAllocatorSession::DoAllocate(bool disable_equivalent) {
       }
 
       if (!config || config->relays.empty()) {
+	  	RTC_LOG(LS_INFO) << "ppt, in BasicPortAllocatorSession::DoAllocate, PORTALLOCATOR_DISABLE_RELAY";
         // No relay ports specified in this config.
         sequence_flags |= PORTALLOCATOR_DISABLE_RELAY;
       }
@@ -1315,7 +1317,7 @@ void AllocationSequence::OnMessage(rtc::Message* msg) {
   const char* const PHASE_NAMES[kNumPhases] = {"Udp", "Relay", "Tcp"};
 
   // Perform all of the phases in the current step.
-  RTC_LOG(LS_INFO) << network_->ToString()
+  RTC_LOG(LS_INFO) << "ppt, " << network_->ToString()
                    << ": Allocation Phase=" << PHASE_NAMES[phase_];
 
   switch (phase_) {
