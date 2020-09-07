@@ -164,6 +164,7 @@ void JavaToNativeRTCConfiguration(
       JavaToNativeTcpCandidatePolicy(jni, j_tcp_candidate_policy);
   rtc_config->candidate_network_policy =
       JavaToNativeCandidateNetworkPolicy(jni, j_candidate_network_policy);
+  RTC_LOG(LS_INFO) << "j_ice_servers to rtc_config->servers";
   rtc_config->servers = JavaToNativeIceServers(jni, j_ice_servers);
   rtc_config->audio_jitter_buffer_max_packets =
       Java_RTCConfiguration_getAudioJitterBufferMaxPackets(jni, j_rtc_config);
