@@ -592,10 +592,18 @@ RTCError JsepTransportController::ApplyDescription_n(
 
   for (const cricket::ContentInfo& content_info : description->contents()) {
     // Don't create transports for rejected m-lines and bundled m-lines."
+    
+    RTC_LOG(LS_INFO) << "ppt, in ApplyDescription_n, content_info.name: " << content_info.name
+				<< "content_info.rejected: " << content_info.rejected;
+
+	if(IsBundled(content_info.name))
+		RTC_LOG(LS_INFO) << "*bundled_mid: " << *bundled_mid();
+    	
     if (content_info.rejected ||
         (IsBundled(content_info.name) && content_info.name != *bundled_mid())) {
       continue;
     }
+	RTC_LOG(LS_INFO) << "ppt, in ApplyDescription_n, go to MaybeCreateJsepTransport";
     error = MaybeCreateJsepTransport(local, content_info, *description);
     if (!error.ok()) {
       return error;
