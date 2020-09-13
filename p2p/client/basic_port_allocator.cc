@@ -243,8 +243,10 @@ void BasicPortAllocator::AddTurnServer(const RelayServerConfig& turn_server) {
 void BasicPortAllocator::InitRelayPortFactory(
     RelayPortFactoryInterface* relay_port_factory) {
   if (relay_port_factory != nullptr) {
+  	RTC_LOG(LS_INFO) << "ppt,in BasicPortAllocator::InitRelayPortFactory, relay_port_factory != nullptr";
     relay_port_factory_ = relay_port_factory;
   } else {
+  	RTC_LOG(LS_INFO) << "ppt,in BasicPortAllocator::InitRelayPortFactory, go to default_relay_port_factory_.reset(new TurnPortFactory";
     default_relay_port_factory_.reset(new TurnPortFactory());
     relay_port_factory_ = default_relay_port_factory_.get();
   }
@@ -1323,7 +1325,7 @@ void AllocationSequence::OnMessage(rtc::Message* msg) {
   switch (phase_) {
     case PHASE_UDP:
       CreateUDPPorts();
-      CreateStunPorts();
+      CreateStunPorts();//stun
       break;
 
     case PHASE_RELAY:
