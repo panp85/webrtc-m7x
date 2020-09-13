@@ -2158,7 +2158,7 @@ void PeerConnection::SetLocalDescription(
   // MaybeStartGathering needs to be called after posting
   // MSG_SET_SESSIONDESCRIPTION_SUCCESS, so that we don't signal any candidates
   // before signaling that SetLocalDescription completed.
-  transport_controller_->MaybeStartGathering();
+  transport_controller_->MaybeStartGathering();//收集candidate
 
   if (local_description()->GetType() == SdpType::kAnswer) {
     // TODO(deadbeef): We already had to hop to the network thread for
