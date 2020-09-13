@@ -501,6 +501,10 @@ void UDPPort::OnStunBindingRequestSucceeded(
     }
 
     rtc::StringBuilder url;
+		RTC_LOG(LS_WARNING) << "ppt, stun:" << stun_server_addr.ipaddr().ToString() << ":"
+        << stun_server_addr.port()
+        << ", stun_reflected_addr: " << stun_reflected_addr.ipaddr().ToString() << ":" << stun_reflected_addr.port()
+        << ", related_address: " << related_address.ipaddr().ToString() << ":" << related_address.port();
     url << "stun:" << stun_server_addr.ipaddr().ToString() << ":"
         << stun_server_addr.port();
     AddAddress(stun_reflected_addr, socket_->GetLocalAddress(), related_address,
