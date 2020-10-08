@@ -94,7 +94,9 @@ void AudioState::AddSendingStream(webrtc::AudioSendStream* stream,
   properties.sample_rate_hz = sample_rate_hz;
   properties.num_channels = num_channels;
   UpdateAudioTransportWithSendingStreams();
-
+  #if 0
+  audio_source_process.start();
+  #endif
   // Make sure recording is initialized; start recording if enabled.
   auto* adm = config_.audio_device_module.get();
   if (!adm->Recording()) {

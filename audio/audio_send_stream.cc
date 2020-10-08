@@ -347,7 +347,9 @@ void AudioSendStream::SendAudioData(std::unique_ptr<AudioFrame> audio_frame) {
   RTC_CHECK_RUNS_SERIALIZED(&audio_capture_race_checker_);
   channel_send_->ProcessAndEncodeAudio(std::move(audio_frame));
 }
-
+void AudioSendStream::sendAudioCodedData(){
+	channel_send->SendData();
+}
 bool AudioSendStream::SendTelephoneEvent(int payload_type,
                                          int payload_frequency,
                                          int event,

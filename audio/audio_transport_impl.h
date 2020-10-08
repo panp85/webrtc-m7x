@@ -43,7 +43,9 @@ class AudioTransportImpl : public AudioTransport {
                                   const uint32_t currentMicLevel,
                                   const bool keyPressed,
                                   uint32_t& newMicLevel) override;
-
+  
+  int32_t CodecDataIsAvailable();
+  
   int32_t NeedMorePlayData(const size_t nSamples,
                            const size_t nBytesPerSample,
                            const size_t nChannels,

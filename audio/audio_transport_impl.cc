@@ -167,6 +167,24 @@ int32_t AudioTransportImpl::RecordedDataIsAvailable(
 
   return 0;
 }
+	
+int32_t AudioTransportImpl::CodedDataIsAvailable(){
+  {
+    rtc::CritScope lock(&capture_lock_);
+
+    RTC_DCHECK_GT(audio_frame->samples_per_channel_, 0);
+    if (!sending_streams_.empty()) {
+      auto it = sending_streams_.begin();
+      while (++it != sending_streams_.end()) {
+        std::unique_ptr<AudioFrame> audio_frame_copy(new AudioFrame());
+        audio_frame_copy->CopyFrom(*audio_frame.get());
+        (*it)->SendAudioData(std::move(audio_frame_copy));
+      }
+      // Send the original frame to the first stream w/o copying.
+      (*sending_streams_.begin())->SendAudioData(std::move(audio_frame));
+    }
+  }
+}
 
 // Mix all received streams, feed the result to the AudioProcessing module, then
 // resample the result to the requested output rate.

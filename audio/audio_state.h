@@ -71,7 +71,9 @@ class AudioState : public webrtc::AudioState {
   // Transports mixed audio from the mixer to the audio device and
   // recorded audio to the sending streams.
   AudioTransportImpl audio_transport_;
-
+  #if 0
+  AudioSourceProcess audio_source_process;
+  #endif
   // Null audio poller is used to continue polling the audio streams if audio
   // playout is disabled so that audio processing still happens and the audio
   // stats are still updated.

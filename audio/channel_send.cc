@@ -238,6 +238,7 @@ class ChannelSend
   std::unique_ptr<RtpRtcp> _rtpRtcpModule;
 
   std::unique_ptr<AudioCodingModule> audio_coding_;
+  std::unique_prt<AudioSourceModule> audio_source_;
   uint32_t _timeStamp RTC_GUARDED_BY(encoder_queue_);
 
   // uses
@@ -667,7 +668,9 @@ ChannelSend::ChannelSend(Clock* clock,
   module_process_thread_checker_.DetachFromThread();
 
   audio_coding_.reset(AudioCodingModule::Create(AudioCodingModule::Config()));
-
+#if 0
+  audio_source_.reset(AudioSourceModule::Create(/*AudioConfigModule::config()*/));
+#endif
   RtpRtcp::Configuration configuration;
 
   // We gradually remove codepaths that depend on RTP when using media
