@@ -780,7 +780,7 @@ int32_t AudioDeviceLinuxALSA::InitPlayout() {
   GetDevicesInfo(2, true, _outputDeviceIndex, deviceName,
                  kAdmMaxDeviceNameSize);
 
-  RTC_LOG(LS_VERBOSE) << "InitPlayout open (" << deviceName << ")";
+  RTC_LOG(LS_INFO) << "InitPlayout open (" << deviceName << ")";
 
   errVal = LATE(snd_pcm_open)(&_handlePlayout, deviceName,
                               SND_PCM_STREAM_PLAYBACK, SND_PCM_NONBLOCK);
@@ -1144,11 +1144,6 @@ int32_t AudioDeviceLinuxALSA::StartPlayout() {
   }
 
   // PLAYOUT
-  _ptrThreadPlay.reset(new rtc::PlatformThread(
-      PlayThreadFunc, this, "webrtc_audio_module_play_thread"));
-  _ptrThreadPlay->Start();
-  _ptrThreadPlay->SetPriority(rtc::kRealtimePriority);
-
   int errVal = LATE(snd_pcm_prepare)(_handlePlayout);
   if (errVal < 0) {
     RTC_LOG(LS_ERROR) << "playout snd_pcm_prepare failed ("
@@ -1156,6 +1151,11 @@ int32_t AudioDeviceLinuxALSA::StartPlayout() {
     // just log error
     // if snd_pcm_open fails will return -1
   }
+
+  _ptrThreadPlay.reset(new rtc::PlatformThread(
+      PlayThreadFunc, this, "webrtc_audio_module_play_thread"));
+  _ptrThreadPlay->Start();
+  _ptrThreadPlay->SetPriority(rtc::kRealtimePriority);
 
   return 0;
 }
